@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { Route, HashRouter, Redirect, Switch } from 'react-router-dom'
 import Config from './config/'
-console.log(Config)
-const App = ()=>{
-
+import Test from './pages/test'
+const App = () => {
     return (
-        <div>我是函数组件2</div>
+        <Suspense fallback={<div>加载中</div>}>
+            <HashRouter >
+                <Switch>
+                    <Route exact path="/test" component={Test} />
+                    <Route exact path="/a" component={Test} />
+                    <Route exact path="/b" component={() => {
+                        return <Redirect exact to="/home2" />
+                    }} />
+                </Switch>
+            </HashRouter>
+        </Suspense>
     )
 }
 
