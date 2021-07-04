@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const AutoConfigPlugin = require('./AutoConfig')
 console.log(path.resolve(`src/index.js`))
 module.exports = {
   devtool: 'source-map',
@@ -24,12 +24,12 @@ module.exports = {
     publicPath: '', //  js前缀公共部分
   },
   plugins: [
+    new AutoConfigPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       inject: 'body',
       template: path.resolve('src/index.html'),
-    })
-
+    }),
   ],
   module: {
     rules: [

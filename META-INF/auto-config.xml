@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <group name="hosts">
+    <property name="domain"  description="网络域名" defaultValue="https://wwww.xzf.com" />
+    <property name="url"  description="接口地址" defaultValue="https://wwww.xzf.com/api" />
+  </group>
+  <script>
+    <generate template="src/config/index.js" destfile="src/config/index.js" charset="UTF-8" />
+  </script>
+</config>
