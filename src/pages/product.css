@@ -1,0 +1,7 @@
+.product {
+    display: flex;
+    height: 400px;
+    width: 400px; 
+    background-color: blue; 
+    transform: rotate(35deg);
+}

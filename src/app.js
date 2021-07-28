@@ -7,7 +7,7 @@ const App = () => {
         <Suspense fallback={<div>加载中</div>}>
             <HashRouter >
                 <Switch>
-                    <Route exact path="/test" component={Test} />
+                    <Route exact path="/" component={Test} />
                     <Route exact path="/a" component={Test} />
                     <Route exact path="/b" component={() => {
                         return <Redirect exact to="/home2" />

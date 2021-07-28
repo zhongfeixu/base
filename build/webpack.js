@@ -3,11 +3,15 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const AutoConfigPlugin = require('./AutoConfig')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 console.log(path.resolve(`src/index.js`))
+
+const isProduction = process.env.NODE_ENV === 'production'
+
 module.exports = {
   devtool: 'source-map',
   name: 'demo',
-  mode: 'development',
+  mode: !isProduction ? 'development' : 'production',
   stats: {
     children: false,
     chunks: false,
@@ -25,13 +29,12 @@ module.exports = {
     publicPath: '', //  js前缀公共部分
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash:8].css',
-      chunkFilename: '[id].[chunkhash:8].css',
+      filename: 'css/[name].[chunkhash:8].css',
     }),
     // new MiniCssExtractPlugin(),
     new AutoConfigPlugin(),
-
     new HtmlWebpackPlugin({
       filename: 'index.html',
       inject: 'body',
@@ -43,15 +46,18 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader', 'css-loader','postcss-loader' // postcss-loader 可选
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          "postcss-loader",
         ],
       },
 
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.(scss)$/i,
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
+          "postcss-loader",
           "sass-loader",
         ],
       },
@@ -63,6 +69,26 @@ module.exports = {
         },
         include: /src/,          // 只转化src目录下的js
         exclude: /node_modules/   //排除
+      },
+      // 图片解析
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 100,
+              outputPath: 'images',//决定打包出来的文件的路径 在 dist 下的路径
+              // publicPath:'../image',//决定引用的文件的路径 publicPath+name = css中引用的url的路径
+              name: '[name]_[hash:10].[ext]',
+              esModule: false,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
       }
     ]
   },
