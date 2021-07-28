@@ -20,7 +20,9 @@ module.exports = {
   },
   context: path.resolve(''),
   entry: {
-    main: path.resolve(`src/index.js`),
+    main:path.resolve(`src/index.js`),
+    // '/js/test': path.resolve(`src/pages/test/test.js`),
+    // '/js/product': path.resolve(`src/pages/product/index.js`),
   },
   output: {
     path: path.resolve('dist'),
@@ -31,7 +33,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[chunkhash:8].css',
+      filename: '[name].[chunkhash:8].css',
     }),
     // new MiniCssExtractPlugin(),
     new AutoConfigPlugin(),
